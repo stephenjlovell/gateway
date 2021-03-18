@@ -1,6 +1,6 @@
-module Api
+module API
   module V1
-    class ApiController < ActionController::API
+    class APIController < ActionController::API
 
       rescue_from ActiveRecord::RecordNotFound,        with: :render_not_found
       rescue_from ActiveRecord::RecordInvalid,         with: :render_record_invalid
