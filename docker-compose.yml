@@ -1,0 +1,40 @@
+# NOTE: this is for local development only.
+version: '3.0'
+
+services:
+  gateway:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    links:
+      - "db:db"
+    environment:
+      POSTGRES_USER: 'gateway'
+      POSTGRES_PASSWORD: 'postgres'
+  db:
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: 'gateway'
+      POSTGRES_PASSWORD: 'postgres'
+      # POSTGRES_PASSWORD_FILE: /run/secrets/psql_password
+      # POSTGRES_USER_FILE: /run/secrets/psql_user
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    # secrets:
+    #   - psql_user
+    #   - psql_password
+
+volumes:
+  db_data:
+
+# secrets:
+#   psql_user:
+#     file: ./psql_user.txt
+#   psql_password:
+#     file: ./psql_password.txt
